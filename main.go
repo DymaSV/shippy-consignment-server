@@ -7,7 +7,6 @@ import (
 	"sync"
 
 	pb "github.com/DymaSV/shippy-consignment-server/proto/consignment"
-	"github.com/micro/go-micro/v2"
 	micro "github.com/micro/go-micro/v2"
 )
 

@@ -42,8 +42,8 @@ func NewShippingServiceEndpoints() []*api.Endpoint {
 // Client API for ShippingService service
 
 type ShippingService interface {
-	CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*CreateResponse, error)
-	GetConsignment(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*GetResponse, error)
+	CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*Response, error)
+	GetConsignment(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*Response, error)
 }
 
 type shippingService struct {
@@ -58,9 +58,9 @@ func NewShippingService(name string, c client.Client) ShippingService {
 	}
 }
 
-func (c *shippingService) CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*CreateResponse, error) {
+func (c *shippingService) CreateConsignment(ctx context.Context, in *Consignment, opts ...client.CallOption) (*Response, error) {
 	req := c.c.NewRequest(c.name, "ShippingService.CreateConsignment", in)
-	out := new(CreateResponse)
+	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -68,9 +68,9 @@ func (c *shippingService) CreateConsignment(ctx context.Context, in *Consignment
 	return out, nil
 }
 
-func (c *shippingService) GetConsignment(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*GetResponse, error) {
+func (c *shippingService) GetConsignment(ctx context.Context, in *GetRequest, opts ...client.CallOption) (*Response, error) {
 	req := c.c.NewRequest(c.name, "ShippingService.GetConsignment", in)
-	out := new(GetResponse)
+	out := new(Response)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -81,14 +81,14 @@ func (c *shippingService) GetConsignment(ctx context.Context, in *GetRequest, op
 // Server API for ShippingService service
 
 type ShippingServiceHandler interface {
-	CreateConsignment(context.Context, *Consignment, *CreateResponse) error
-	GetConsignment(context.Context, *GetRequest, *GetResponse) error
+	CreateConsignment(context.Context, *Consignment, *Response) error
+	GetConsignment(context.Context, *GetRequest, *Response) error
 }
 
 func RegisterShippingServiceHandler(s server.Server, hdlr ShippingServiceHandler, opts ...server.HandlerOption) error {
 	type shippingService interface {
-		CreateConsignment(ctx context.Context, in *Consignment, out *CreateResponse) error
-		GetConsignment(ctx context.Context, in *GetRequest, out *GetResponse) error
+		CreateConsignment(ctx context.Context, in *Consignment, out *Response) error
+		GetConsignment(ctx context.Context, in *GetRequest, out *Response) error
 	}
 	type ShippingService struct {
 		shippingService
@@ -101,10 +101,10 @@ type shippingServiceHandler struct {
 	ShippingServiceHandler
 }
 
-func (h *shippingServiceHandler) CreateConsignment(ctx context.Context, in *Consignment, out *CreateResponse) error {
+func (h *shippingServiceHandler) CreateConsignment(ctx context.Context, in *Consignment, out *Response) error {
 	return h.ShippingServiceHandler.CreateConsignment(ctx, in, out)
 }
 
-func (h *shippingServiceHandler) GetConsignment(ctx context.Context, in *GetRequest, out *GetResponse) error {
+func (h *shippingServiceHandler) GetConsignment(ctx context.Context, in *GetRequest, out *Response) error {
 	return h.ShippingServiceHandler.GetConsignment(ctx, in, out)
 }
